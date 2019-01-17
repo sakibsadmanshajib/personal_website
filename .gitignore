@@ -112,3 +112,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Custom
+*.cnf
+\.idea/
+migrations/
+.vscode/
+static/
