@@ -22,7 +22,7 @@
                 </tr>
                 {% for account in account_list %}
                     <tr>
-                    <th>{{ account.name}}</th>
+                    <th><a href="{% url 'finance_management:account_details' account.id %}">{{ account.name}}</a></th>
                     <td>{{ account.balance }}</td>
                     <td>{{ account.currency }}</td>
                     </tr>

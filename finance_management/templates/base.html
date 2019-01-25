@@ -36,7 +36,8 @@
                     <a class="nav-link" href="{% url 'finance_management:transaction' %}">Transaction</a>
                 </li>
             </ul>
-            <a class="btn btn-danger" href="{% url 'finance_management:logout' %}">Logout</a>
+            <div class="nav-item">Hello {{request.user.username}}</div>
+            <a class="btn btn-danger" href="{% url 'base:logout' %}">Logout</a>
         </div>
     </nav>
 

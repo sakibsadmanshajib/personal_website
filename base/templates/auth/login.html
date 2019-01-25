@@ -1,9 +1,9 @@
-{% extends 'finance_management/base.html' %}
+{% extends 'base.html' %}
 {% load widget_tweaks %}
 
 {% block content %}
 
-<form method="post" action="{% url 'finance_management:login' %}" style="display: flex; align-items: center; flex-direction: column; margin: 50px 20px">
+<form method="post" action="{% url 'base:login' %}" style="display: flex; align-items: center; flex-direction: column; margin: 50px 20px">
 
     {% csrf_token %}
 

@@ -25,13 +25,14 @@ SECRET_KEY = 't&b-k2pv#*vyn_zb&kh)&ca9ikub^6t_4v$lta*3(rr*_%h%_t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sakibsadmanshajib.com', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'widget_tweaks',
+    'base.apps.BaseConfig',
     'finance_management.apps.FinanceManagementConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,9 +125,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')

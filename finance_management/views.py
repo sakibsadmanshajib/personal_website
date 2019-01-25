@@ -1,41 +1,13 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import *
 from .forms import *
 from django.contrib.auth.decorators import user_passes_test
 
-
-def user_login(request):
-    context = {}
-    next = request.GET.get('next')
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            if next:
-                return redirect(next)
-            else:
-                messages.success(request, "You have successfully logged in!")
-                return redirect('finance_management:order')
-        else:
-            messages.error(request, "Provide valid credentials.")
-            return render(request, 'auth/login.html')
-    
-    else:
-        return render(request, 'auth/login.html', context)
-
-
-def user_logout(request):
-    messages.success(request, "You have been logged out!")
-    logout(request)
-    return redirect('finance_management:login')
-
+@user_passes_test(lambda u: u.is_superuser)
 def add_transaction(request):
     all_account_list = Account.objects.all()
     
@@ -68,6 +40,7 @@ def add_transaction(request):
         form = AddTransaction()
         return render(request, 'transaction/add_transaction.html', {'form': form, 'account_list': all_account_list})
 
+@user_passes_test(lambda u: u.is_superuser)
 def add_account(request):
     if request.method == 'POST':
 
@@ -89,7 +62,7 @@ def add_account(request):
         form = AddAccount()
         return render(request, 'account/add_account.html', {'form': form})
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def account(request):
     all_account_list = Account.objects.all()
 
@@ -99,6 +72,7 @@ def account(request):
     else:
         return render(request, 'account/account.html', {'account_list': all_account_list})
 
+@user_passes_test(lambda u: u.is_superuser)
 def transaction(request):
     all_transaction_list = Transaction.objects.all()
 
@@ -107,3 +81,13 @@ def transaction(request):
         return render(request, 'transaction/transaction.html', {'transaction_list': None})
     else:
         return render(request, 'transaction/transaction.html', {'transaction_list': all_transaction_list})
+
+@user_passes_test(lambda u: u.is_superuser)
+def account_details(request, account_id):
+    account = Account.objects.get(id=account_id)
+    all_transaction_list = Transaction.objects.all()
+    account_transaction = []
+    for transaction in all_transaction_list:
+        if transaction.account == account.name:
+            account_transaction.append(transaction)
+    return render(request, 'account/account_details.html', {'account': account, 'account_transaction': account_transaction})
